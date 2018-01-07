@@ -17,14 +17,14 @@ export class MsalTokens {
     private uaa: UserAgentApplication;
 
 
-    public tryGetUserPopup(): Promise<User> {
+    public tryGetUserPopup(scopes?: string[]): Promise<User> {
         var usr = this.uaa.getUser();
 
         if(usr) {
             return Promise.resolve(usr);
         }
         else {
-            return this.uaa.loginPopup(["user.read"])
+            return this.uaa.loginPopup(this.getScopes(scopes))
                 .then(idToken => {
                     usr = this.uaa.getUser();
                 })
@@ -32,5 +32,10 @@ export class MsalTokens {
                     return usr;
                 });
         }
+    }
+
+    private getScopes(scopes?: string[]): string[] {
+        if(scopes && scopes.length) return scopes;
+        return ["user.read"];
     }
 }

@@ -83,13 +83,13 @@ class MsalTokens {
     constructor(userAgentApp) {
         this.uaa = userAgentApp;
     }
-    tryGetUserPopup() {
+    tryGetUserPopup(scopes) {
         var usr = this.uaa.getUser();
         if (usr) {
             return Promise.resolve(usr);
         }
         else {
-            return this.uaa.loginPopup(["user.read"])
+            return this.uaa.loginPopup(this.getScopes(scopes))
                 .then(idToken => {
                 usr = this.uaa.getUser();
             })
@@ -97,6 +97,11 @@ class MsalTokens {
                 return usr;
             });
         }
+    }
+    getScopes(scopes) {
+        if (scopes && scopes.length)
+            return scopes;
+        return ["user.read"];
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["MsalTokens"] = MsalTokens;
