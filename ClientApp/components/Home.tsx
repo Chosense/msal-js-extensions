@@ -1,7 +1,20 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { UserAgentApplication } from "msal";
+import { MsalTokens } from "../extensions/MsalTokens";
 
 export class Home extends React.Component<RouteComponentProps<{}>, {}> {
+    constructor() {
+        super();
+
+        this.uaa = Home.defaultUserAgentApplication();
+        this.tokens = new MsalTokens(this.uaa);
+    }
+
+    private uaa: UserAgentApplication;
+    private tokens: MsalTokens;
+
+
     public render() {
         return <div>
             <h1>Hello, world!</h1>
@@ -25,5 +38,11 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
                 You can generate an ASP.NET Core application with React and Redux using <code>dotnet new reactredux</code> instead of using this template.
             </p>
         </div>;
+    }
+
+    public static defaultUserAgentApplication(): UserAgentApplication {
+        return new UserAgentApplication("44d3dc9d-6185-40ff-9d5b-e32042d8b272", "https://login.microsoftonline.com/common", undefined, {
+            redirectUri: "http://localhost:5000"
+        });
     }
 }

@@ -1,7 +1,25 @@
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { MsalTokens } from "../extensions/MsalTokens";
+import { Home } from "./Home";
+import { User } from 'msal/lib-commonjs/User';
 
-export class NavMenu extends React.Component<{}, {}> {
+export interface IMenuState {
+    isLoggedIn?: boolean
+}
+
+export class NavMenu extends React.Component<{}, IMenuState> {
+    constructor() {
+        super();
+
+        this.state = { isLoggedIn: false };
+        this.tokens = new MsalTokens(Home.defaultUserAgentApplication());
+    }
+
+    private tokens: MsalTokens;
+
+    
+
     public render() {
         return <div className='main-nav'>
                 <div className='navbar navbar-inverse'>
@@ -32,9 +50,19 @@ export class NavMenu extends React.Component<{}, {}> {
                                 <span className='glyphicon glyphicon-th-list'></span> Fetch data
                             </NavLink>
                         </li>
+                        <li>
+                            <a onClick={ this.onLogin.bind(this) } ><span className='glyphicon glyphicon-log-in'></span> Log in</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>;
+    }
+
+    private onLogin(): Promise<User> {
+        return this.tokens.tryGetUserPopup()
+            .then(u => {
+                return u;
+            });
     }
 }

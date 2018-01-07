@@ -33,6 +33,9 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -69,20 +72,34 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MsalTokens", function() { return MsalTokens; });
 /**
  * Provides methods for working with access tokens.
  */
-var MsalTokens = /** @class */ (function () {
+class MsalTokens {
     /**
      * Creates a new instance of the class.
      * @param userAgentApp The UserAgentApplication instance to use in the MsalTokens class.
      */
-    function MsalTokens(userAgentApp) {
+    constructor(userAgentApp) {
         this.uaa = userAgentApp;
     }
-    return MsalTokens;
-}());
+    tryGetUserPopup() {
+        var usr = this.uaa.getUser();
+        if (usr) {
+            return Promise.resolve(usr);
+        }
+        else {
+            return this.uaa.loginPopup(["user.read"])
+                .then(idToken => {
+                usr = this.uaa.getUser();
+            })
+                .then(() => {
+                return usr;
+            });
+        }
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["MsalTokens"] = MsalTokens;
 
 
 
