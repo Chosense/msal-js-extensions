@@ -1,9 +1,9 @@
 {
   "name": "msal-js-extensions",
   "version": "0.1.0",
-  "description": "Extensions for the [Microsoft Authentication Library for JavaScript (msal.js)](https://github.com/AzureAD/microsoft-authentication-library-for-js).",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,11 @@
   "homepage": "https://github.com/Chosense/msal-js-extensions#readme",
   "dependencies": {
     "msal": "^0.1.3"
+  },
+  "devDependencies": {
+    "@types/es6-promise": "^3.3.0",
+    "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0"
   }
 }
