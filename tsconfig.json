@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
-    "noImplicitAny": true,
+    "baseUrl": ".",
+    "module": "es2015",
     "moduleResolution": "node",
-    "module": "es6",
     "target": "es5",
     "jsx": "react",
     "sourceMap": true,
-    "strict": false,
-    "allowJs": true,
-    "lib": ["es6", "dom"],
-    "types": ["es6-promise"]
+    "skipDefaultLibCheck": true,
+    "strict": true,
+    "types": ["webpack-env"]
   },
   "exclude": [
       "bin",
