@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { MsalTokens } from "../../src/MsalTokens";
-import { Home } from "./Home";
+import { MsalService } from "../../src/MsalService";
 import { User } from 'msal/lib-commonjs/User';
 
 export interface IMenuState {
@@ -13,14 +12,23 @@ export class NavMenu extends React.Component<{}, IMenuState> {
         super();
 
         this.state = { isLoggedIn: false };
-        this.tokens = new MsalTokens(Home.defaultUserAgentApplication());
     }
-
-    private tokens: MsalTokens;
 
     
 
     public render() {
+        var usr = MsalService.current.userAgentApp.getUser();
+
+        var loginElem: JSX.Element = usr ?
+            <li>
+                <button type="button" className="btn navbar-btn" onClick={ this.onLogout.bind(this) }><span className='glyphicon glyphicon-log-out'></span> Log out</button>
+            </li>
+            :
+            <li>
+                <button type="button" className="btn navbar-btn" onClick={ this.onLogin.bind(this) }><span className='glyphicon glyphicon-log-in'></span> Log in</button>
+            </li>;
+
+
         return <div className='main-nav'>
                 <div className='navbar navbar-inverse'>
                 <div className='navbar-header'>
@@ -50,9 +58,7 @@ export class NavMenu extends React.Component<{}, IMenuState> {
                                 <span className='glyphicon glyphicon-th-list'></span> Fetch data
                             </NavLink>
                         </li>
-                        <li>
-                            <a onClick={ this.onLogin.bind(this) } ><span className='glyphicon glyphicon-log-in'></span> Log in</a>
-                        </li>
+                        { loginElem }
                     </ul>
                 </div>
             </div>
@@ -60,9 +66,17 @@ export class NavMenu extends React.Component<{}, IMenuState> {
     }
 
     private onLogin(): Promise<User> {
-        return this.tokens.tryGetUserPopup()
-            .then(u => {
-                return u;
+        return MsalService.current.userAgentApp.loginPopup(["user.read"])
+            .then(idToken => {
+                var usr = MsalService.current.userAgentApp.getUser();
+                this.setState({
+                    isLoggedIn: usr && true
+                });
+                return usr;
             });
+    }
+
+    private onLogout(): void {
+        MsalService.current.userAgentApp.logout();
     }
 }

@@ -1,21 +1,31 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { UserAgentApplication } from "msal";
-import { MsalTokens } from "../../src/MsalTokens";
+import { MsalService } from "../../src/MsalService";
+import { User } from 'msal/lib-commonjs/User';
 
-export class Home extends React.Component<RouteComponentProps<{}>, {}> {
+
+export interface IHomeState {
+    currentUser?: User;
+}
+
+export class Home extends React.Component<RouteComponentProps<{}>, IHomeState> {
     constructor() {
         super();
 
-        this.uaa = Home.defaultUserAgentApplication();
-        this.tokens = new MsalTokens(this.uaa);
+        this.state = {
+            currentUser: MsalService.current.userAgentApp.getUser()
+        };
     }
-
-    private uaa: UserAgentApplication;
-    private tokens: MsalTokens;
 
 
     public render() {
+        var loginElem: JSX.Element = null;
+        if(!this.state.currentUser) {
+            loginElem = <p>
+                    <button onClick={this.onLogin.bind(this) } className="btn btn-primary btn-lg">Log In, will you!</button>
+                </p>;
+        }
+
         return <div>
             <h1>Hello, world!</h1>
             <p>Welcome to your new single-page application, built with:</p>
@@ -37,12 +47,17 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
                 For larger applications, or for server-side prerendering (i.e., for <em>isomorphic</em> or <em>universal</em> applications), you should consider using a Flux/Redux-like architecture.
                 You can generate an ASP.NET Core application with React and Redux using <code>dotnet new reactredux</code> instead of using this template.
             </p>
+            { loginElem }
         </div>;
     }
 
-    public static defaultUserAgentApplication(): UserAgentApplication {
-        return new UserAgentApplication("44d3dc9d-6185-40ff-9d5b-e32042d8b272", "https://login.microsoftonline.com/common", undefined, {
-            redirectUri: "http://localhost:5000"
-        });
+    private onLogin() {
+        MsalService.current.userAgentApp.loginPopup(["user.read"])
+            .then(idToken => {
+                console.log("Id token", idToken);
+                this.setState({
+                    currentUser: MsalService.current.userAgentApp.getUser()
+                });
+            });
     }
 }
