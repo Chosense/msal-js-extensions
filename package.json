@@ -37,7 +37,7 @@
   },
   "scripts": {
     "dev": "webpack --config webpack.config.js",
-    "dist": "del src\\*.* /F /Q & copy ClientApp\\extensions\\*.* src & webpack --config webpack.config.dist.js",
+    "dist": "webpack --config webpack.config.dist.js",
     "copy": "webpack --config webpack.config.copysrc.js"
   }
 }

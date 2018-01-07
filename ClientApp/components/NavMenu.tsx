@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { MsalTokens } from "../extensions/MsalTokens";
+import { MsalTokens } from "../../src/MsalTokens";
 import { Home } from "./Home";
 import { User } from 'msal/lib-commonjs/User';
 

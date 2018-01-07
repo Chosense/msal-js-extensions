@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { UserAgentApplication } from "msal";
-import { MsalTokens } from "../extensions/MsalTokens";
+import { MsalTokens } from "../../src/MsalTokens";
 
 export class Home extends React.Component<RouteComponentProps<{}>, {}> {
     constructor() {
