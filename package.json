@@ -1,0 +1,18 @@
+{
+  "name": "msal-js-extensions",
+  "version": "0.1.0",
+  "description": "Extensions for the [Microsoft Authentication Library for JavaScript (msal.js)](https://github.com/AzureAD/microsoft-authentication-library-for-js).",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chosense/msal-js-extensions.git"
+  },
+  "author": "Chosense Inc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chosense/msal-js-extensions/issues"
+  },
+  "homepage": "https://github.com/Chosense/msal-js-extensions#readme"
+}
