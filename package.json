@@ -14,5 +14,8 @@
   "bugs": {
     "url": "https://github.com/Chosense/msal-js-extensions/issues"
   },
-  "homepage": "https://github.com/Chosense/msal-js-extensions#readme"
+  "homepage": "https://github.com/Chosense/msal-js-extensions#readme",
+  "dependencies": {
+    "msal": "^0.1.3"
+  }
 }
