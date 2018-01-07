@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-    entry: './src/MsalTokens.ts',
+    entry: './src/MsalService.ts',
     devtool: 'source-map',
     module: {
       rules: [

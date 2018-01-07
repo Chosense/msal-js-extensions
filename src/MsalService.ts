@@ -1,22 +1,6 @@
 import { UserAgentApplication } from "msal";
 import { User } from "msal/lib-commonjs/User";
 
-/**
- * Defines the options object for the MsalService class.
- */
-export interface IMsalServiceOptions {
-    /** Required. The ID of the application (ClientId) to connect to Azure AD as. */
-    clientId: string;
-
-    /** Optional. The Azure AD instance to connect to. Defaults to 'https://login.microsoftonline.com' */
-    aadInstance?: string;
-
-    /** The tenant to use to connect to Azure AD with. Defaults to 'common' */
-    tenant?: string;
-
-    /** Optional. The URL to use to redirect clients back after authentication. Defaults to the current URL. */
-    redirectUrl?: string;
-}
 
 /**
  * Tools and utilities for working with MSAL.js.
@@ -24,18 +8,10 @@ export interface IMsalServiceOptions {
 export class MsalService {
     /**
      * Creates a new instance of the class.
-     * @param options The options object.
+     * @param userAgentApp An instance of the UserAgentApplication class that the MsalService instance will use.
      */
-    constructor(options: IMsalServiceOptions) {
-        if(!options) throw "Options are required.";
-
-        var instance: string = options.aadInstance ? options.aadInstance : "https://login.microsoftonline.com";
-        var tenant: string = options.tenant ? options.tenant : "common";
-        var authority = instance + "/" + tenant;
-
-        this._userAgentApp = new UserAgentApplication(options.clientId, authority, undefined, {
-            redirectUri: options.redirectUrl
-        });
+    constructor(userAgentApp: UserAgentApplication) {
+        this._userAgentApp = userAgentApp;
     }
 
     private static _current: MsalService;
@@ -51,10 +27,10 @@ export class MsalService {
 
     /**
      * Initializes the current instance of the MsalService.
-     * @param options The options to use to initialize the MsalService with.
+     * @param userAgentApp The UserAgentApplication instance to init the current MsalService with.
      */
-    public static initCurrent(options: IMsalServiceOptions) {
-        MsalService._current = new MsalService(options);
+    public static initCurrent(userAgentApp: UserAgentApplication) {
+        MsalService._current = new MsalService(userAgentApp);
     }
 
     

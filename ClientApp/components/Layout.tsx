@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavMenu } from './NavMenu';
 import { MsalService } from "../../src/MsalService";
+import { UserAgentApplication } from 'msal';
 
 
 export interface LayoutProps {
@@ -11,10 +12,11 @@ export class Layout extends React.Component<LayoutProps, {}> {
     constructor() {
         super();
 
-        MsalService.initCurrent({
-            clientId: "44d3dc9d-6185-40ff-9d5b-e32042d8b272",
-            redirectUrl: "http://localhost:5000"
-        });
+        MsalService.initCurrent(
+            new UserAgentApplication("44d3dc9d-6185-40ff-9d5b-e32042d8b272", "https://login.microsoftonline.com/common", undefined, {
+                redirectUri: "http://localhost:5000"
+            })
+        );
     }
 
 
