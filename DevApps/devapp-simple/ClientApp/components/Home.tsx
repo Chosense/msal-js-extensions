@@ -1,7 +1,19 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { UserAgentApplication } from "msal";
+import { UserAgentApplicationFactory } from "../src/UserAgentApplicationFactory";
 
 export class Home extends React.Component<RouteComponentProps<{}>, {}> {
+    constructor() {
+        super();
+
+        // We just need to have an instance of the UAA class on this page, since this is our redirect page
+        // that needs to handle all sorts of things. The instance will take care of all that.
+        this.uaa = UserAgentApplicationFactory.defaultInstance();
+    }
+
+    private uaa: UserAgentApplication;
+
     public render() {
         return <div>
             <h1>Hello, world!</h1>

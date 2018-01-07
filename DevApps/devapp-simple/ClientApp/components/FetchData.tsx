@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
+import { UserAgentApplication } from "msal";
+import { UserAgentApplicationFactory } from "../src/UserAgentApplicationFactory";
 
 interface FetchDataExampleState {
     forecasts: WeatherForecast[];
@@ -12,11 +14,19 @@ export class FetchData extends React.Component<RouteComponentProps<{}>, FetchDat
         super();
         this.state = { forecasts: [], loading: true };
 
+        this.uaa = UserAgentApplicationFactory.defaultInstance();
+    }
+
+    private uaa: UserAgentApplication;
+
+    public componentDidMount() {
+
         fetch('api/SampleData/WeatherForecasts')
             .then(response => response.json() as Promise<WeatherForecast[]>)
             .then(data => {
                 this.setState({ forecasts: data, loading: false });
             });
+
     }
 
     public render() {

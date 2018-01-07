@@ -69,19 +69,19 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TokenFactory", function() { return TokenFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MsalTokens", function() { return MsalTokens; });
 /**
  * Provides methods for working with access tokens.
  */
-var TokenFactory = /** @class */ (function () {
+var MsalTokens = /** @class */ (function () {
     /**
      * Creates a new instance of the class.
-     * @param userAgentApp The UserAgentApplication instance to use in the TokenFactory class.
+     * @param userAgentApp The UserAgentApplication instance to use in the MsalTokens class.
      */
-    function TokenFactory(userAgentApp) {
+    function MsalTokens(userAgentApp) {
         this.uaa = userAgentApp;
     }
-    return TokenFactory;
+    return MsalTokens;
 }());
 
 
