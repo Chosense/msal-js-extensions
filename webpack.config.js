@@ -8,10 +8,7 @@ module.exports = {
         {
           test: /\.tsx?$/,
           use: 'ts-loader',
-          exclude: [
-            // "node_modules",
-            // "DevApps"
-          ]
+          exclude: /node_modules/
         }
       ]
     },
