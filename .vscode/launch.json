@@ -8,9 +8,9 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch dev app with Chrome",
+            "name": "Launch react app with Chrome",
             "url": "http://localhost:5000",
-            "webRoot": "${workspaceFolder}/wwwroot"
+            "webRoot": "${workspaceFolder}/dev-apps/dev-react/wwwroot"
         }
     ]
 }
